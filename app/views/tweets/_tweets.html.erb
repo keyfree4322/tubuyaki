@@ -4,7 +4,7 @@
       <img class="mr-2 rounded" src="<%= gravatar_url(tweet.user, { size: 50 }) %>" alt="">
       <div class="media-body">
         <div>
-          <%= link_to tweet.user.name, user_path(tweet.user) %><span class="text-muted">posted at <%= tweet.created_at %></span>
+          <%= link_to tweet.user.name, user_path(tweet.user) %><span class="text-muted"> posted at <%= tweet.created_at %></span>
         </div>
         <div>
           <p><%= tweet.content %></p>
@@ -13,6 +13,16 @@
           <% if current_user == tweet.user %>
             <%= link_to "Delete", tweet, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
           <% end %>
+          <% if current_user.already_favorited?(tweet) %>
+            <%= link_to tweet_favorites_path(tweet), method: :delete do %>
+              <i class="fas fa-heart"></i>
+            <% end %>
+          <% else %>
+            <%= link_to tweet_favorites_path(tweet), method: :post do %>
+              <i class="fas fa-heart"></i>
+            <% end %>
+          <% end %>
+          <%= tweet.favorites.count %>
         </div>
       </div>
     </li>

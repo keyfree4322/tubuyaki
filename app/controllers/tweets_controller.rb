@@ -2,6 +2,10 @@ class TweetsController < ApplicationController
   before_action :require_user_logged_in
   before_action :correct_user, only: [:destroy]
   
+  def show
+    @tweets = @user.tweets.order(id: :desc).page(params[:page])
+  end
+  
   def create
     @tweet = current_user.tweets.build(tweet_params)
     if @tweet.save

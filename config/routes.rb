@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     end
   end
  
- resources :tweets, only: [:create, :destroy]
+ resources :tweets, only: [:show,:create, :destroy] do
+   resource :favorites, only: [:create, :destroy]
+ end
+ 
  resources :relationships, only: [:create, :destroy]
 end
